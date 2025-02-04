@@ -1,8 +1,9 @@
 import express from "express";
 import UserRoute from "./router/UserRoute.js";
+import { db } from "./database/db.js";
 
 const app = express();
-const port = 5050;
+const port = 5555;
 
 app.use("/", UserRoute);
 
