@@ -3,9 +3,10 @@ import UserRoute from "./router/UserRoute.js";
 import { db } from "./database/db.js";
 
 const app = express();
-const port = 5555;
+app.use(express.json());
+const port = 5050;
 
-app.use("/", UserRoute);
+app.use("/api", UserRoute);
 
 // app.get("/getMessage",(req, res) => {
 //     res.send("I am from backend getMessage");
