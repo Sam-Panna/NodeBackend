@@ -1,13 +1,13 @@
 import {db} from "../database/db.js"
 
 export const insertUser = (req, res) => {
-    const {name, email, password, phone} = req.body;
-    const q = "insert into user(`name`, `email`, `password`, `phone`) values(?, ?, ?, ?)";
-    db.query(q, [name, email, password, phone],(err, result) => {
+    const {name, email, password, phone, age} = req.body;
+    const q = "insert into user(`name`, `email`, `password`, `phone`, `age`) values(?, ?, ?, ?, ?)";
+    db.query(q, [name, email, password, phone, age],(err, result) => {
         if(err){
             res.send(err);
         }else{
-            res.send(result);
+            res.send({result, message: "User inserted successfully"});
         }
     });
 };
@@ -24,3 +24,4 @@ export const getUser = (req, res) => {
         }
     });
 };
+

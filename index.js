@@ -1,12 +1,17 @@
 import express from "express";
 import UserRoute from "./router/UserRoute.js";
 import { db } from "./database/db.js";
+import AuthRoute from "./router/AuthRoute.js"
+import cors from "cors";
 
 const app = express();
 app.use(express.json());
 const port = 5050;
 
+app.use(cors());
+
 app.use("/api", UserRoute);
+app.use("/log", AuthRoute);
 
 // app.get("/getMessage",(req, res) => {
 //     res.send("I am from backend getMessage");
