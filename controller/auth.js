@@ -1,5 +1,6 @@
 import { db } from "../database/db.js"
 import bcrypt from "bcryptjs";
+import jwt from "jsonwebtoken";
 
 export const insertUser = (req, res) => {
     const { name, email, password, phone, age } = req.body;
@@ -46,28 +47,31 @@ export const login = (req, res) => {
     const { email, password } = req.body;
     const q = "select * from user where email = ?";
 
-    db.query(q, [email], (err, result) => {
+    db.query(q, [email], (err, data) => {
         if (err) {
-            res.send({ err, message: "Database error" });
+           return res.send({ err, message: "Database error" });
         } 
-        else {
-            if (result.length === 0) {
-                res.send({ message: "User Not Found" });
+        
+        if (data.length === 0) {
+              return  res.send({ message: "User Not Found" });
 
 
-            } else if (result[0].password === password) {
-                res.json({ message: "Login Successful" });
+        } 
 
-            } else {
-                res.json({ message: "Incorrect Password" });
-            }
-
+        const checkPassword = bcrypt.compareSync(password, data[0].password);
+        if(!checkPassword){
+            return res.send({message : "Password is Incorrect"});
 
         }
-        // res.send(result);
+        const token = jwt.sign({id: data[0].id},"secretkey");
+        return res.send({message : "Login Successful", data, token});
 
 
-    })
+        
+        
+
+
+    });
 
         
 };
