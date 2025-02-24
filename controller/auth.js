@@ -3,31 +3,35 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 
 export const insertUser = (req, res) => {
+   
     const { name, email, password, phone, age } = req.body;
-    const q = "select * from user where email = ? ";
-
-    db.query(q, [email], (err, result) =>{
-        if(err){
-            return res.send(err);
-        }
-        if(result.length > 0){
-            return res.send({message : "User already exists"});
-        }
-
-        const salt = bcrypt.genSaltSync(10);
-        const hashPassword = bcrypt.hashSync(password, salt);
-        console.log(hashPassword, ":hashPassword");
+    const image = req.file;
+    console.log(image, ":Image");
     
-    const qr = "insert into user(`name`, `email`, `password`, `phone`,`age`) values (?, ?, ?, ?, ?)";
+//     const q = "select * from user where email = ? ";
 
-    db.query(qr, [name, email, hashPassword, phone, age], (err, data) => {
-        if (err) {
-           return res.send(err);
-        } else {
-            return  res.send({data, message : "User inserted Successfully"});
-        }
-    });
-});
+//     db.query(q, [email], (err, result) =>{
+//         if(err){
+//             return res.send(err);
+//         }
+//         if(result.length > 0){
+//             return res.send({message : "User already exists"});
+//         }
+
+//         const salt = bcrypt.genSaltSync(10);
+//         const hashPassword = bcrypt.hashSync(password, salt);
+//         console.log(hashPassword, ":hashPassword");
+    
+//     const qr = "insert into user(`name`, `email`, `password`, `phone`,`age`, `image`) values (?, ?, ?, ?, ?, ?)";
+
+//     db.query(qr, [name, email, hashPassword, phone, age, image], (err, data) => {
+//         if (err) {
+//            return res.send(err);
+//         } else {
+//             return  res.send({data, message : "User inserted Successfully"});
+//         }
+//     });
+// });
 };
 
 export const getUser = (req, res) => {

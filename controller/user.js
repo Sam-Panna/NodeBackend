@@ -1,9 +1,9 @@
 import {db} from "../database/db.js"
 
 export const insertUser = (req, res) => {
-    const {name, email, password, phone, age} = req.body;
-    const q = "insert into user(`name`, `email`, `password`, `phone`, `age`) values(?, ?, ?, ?, ?)";
-    db.query(q, [name, email, password, phone, age],(err, result) => {
+    const {name, email, password, phone, age, image} = req.body;
+    const q = "insert into user(`name`, `email`, `password`, `phone`, `age`, `image`) values(?, ?, ?, ?, ?, ?)";
+    db.query(q, [name, email, password, phone, age, image],(err, result) => {
         if(err){
             res.send(err);
         }else{
